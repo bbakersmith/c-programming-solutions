@@ -15,8 +15,8 @@
 #include <stdlib.h>
 
 typedef struct DigitCharArray {
-  char characters[16];
-  char count;
+  uint8_t characters[16];
+  uint8_t count;
 } DigitCharArray;
 
 /**
@@ -43,10 +43,8 @@ DigitCharArray digit_char_array_new(uint32_t value) {
 }
 
 bool is_palindrome(DigitCharArray arr) {
-  for(char i = 0; i < (arr.count / 2); i++) {
-    char inverse_index = arr.count - 1 - i;
-
-    /* printf("%i == %i\n", arr.characters[i], arr.characters[inverse_index]); */
+  for(uint8_t i = 0; i < (arr.count / 2); i++) {
+    uint8_t inverse_index = arr.count - 1 - i;
 
     if(arr.characters[i] != arr.characters[inverse_index])
       return false;
@@ -76,20 +74,9 @@ int main() {
     DigitCharArray arr = digit_char_array_new(candidate);
     if(is_palindrome(arr)) {
       printf("Largest Palindrome: %i\n", candidate);
-
-      /* for(char i = 0; i < arr.count; i++) { */
-      /*   printf("Digit %i: %i\n", i, arr.characters[i]); */
-      /* } */
-
       return 0;
     }
   }
-
-  /* if(result == true) { */
-  /*   printf("YES"); */
-  /* } else { */
-  /*   printf("NO"); */
-  /* } */
 
   printf("No Palindrome found :(");
   return 1;

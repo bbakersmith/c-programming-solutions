@@ -15,12 +15,12 @@
 #include <stdio.h>
 
 typedef struct Buffer {
-  char items[1000];
-  char count;
-  char head;
+  uint8_t items[1000];
+  uint8_t count;
+  uint8_t head;
 } Buffer;
 
-Buffer buffer_new(char count) {
+Buffer buffer_new(uint8_t count) {
   Buffer buffer = {
     .count = count,
     .head = 0
@@ -28,7 +28,7 @@ Buffer buffer_new(char count) {
   return buffer;
 }
 
-uint64_t cycle_buffer(Buffer *buffer, char next) {
+uint64_t cycle_buffer(Buffer *buffer, uint8_t next) {
   buffer->items[buffer->head] = next;
 
   buffer->head++;
@@ -36,7 +36,7 @@ uint64_t cycle_buffer(Buffer *buffer, char next) {
     buffer->head = 0;
 
   uint64_t product = buffer->items[0];
-  for(char i = 1; i < buffer->count; i++) {
+  for(uint8_t i = 1; i < buffer->count; i++) {
     product *= buffer->items[i];
   }
 
@@ -45,7 +45,7 @@ uint64_t cycle_buffer(Buffer *buffer, char next) {
 
 int main(int argc, char *argv[]) {
   char *filename = argv[1];
-  char count = atoi(argv[2]);
+  uint8_t count = (uint8_t) atoi(argv[2]);
 
   FILE *file = fopen(filename, "r");
 
@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
   fgets(the_big_number, 1024, file);
 
   for(int i = 0; i < 1000; i++) {
-    char next = the_big_number[i] - '0';
+    uint8_t next = the_big_number[i] - '0';
     uint64_t product = cycle_buffer(&buffer, next);
     if(result < product)
       result = product;
@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
 
   fclose(file);
 
-  printf("Largest product: %llu\n", result);
+  printf("Largest product: %lu\n", result);
 
   return 0;
 }

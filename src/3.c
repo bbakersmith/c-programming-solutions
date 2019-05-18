@@ -30,7 +30,7 @@ bool is_prime(uint64_t candidate) {
   return true;
 }
 
-uint8_t main(uint8_t argc, uint8_t *argv[]) {
+int main(int argc, char *argv[]) {
   uint64_t number = atoi(argv[1]);
 
   uint64_t halfway = number / 2;

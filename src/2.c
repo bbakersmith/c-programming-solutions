@@ -43,7 +43,7 @@ uint64_t next_fibonacci_value(Buffer *buffer) {
   return next;
 }
 
-uint8_t main(uint8_t argc, uint8_t *argv[]) {
+int main(int argc, char *argv[]) {
   uint64_t max_value = atoi(argv[1]);
 
   Buffer buffer = buffer_new();

@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
 
   for(uint64_t i = max; i < UINT64_MAX; i++) {
     if(is_smallest_multiple(max, i)) {
-      printf("Smallest multiple: %llu\n", i);
+      printf("Smallest multiple: %lu\n", i);
       return 0;
     }
   }

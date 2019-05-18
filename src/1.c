@@ -26,7 +26,7 @@ uint16_t get_multiple_value(uint16_t value) {
   return (is_multiple(value, 3) || is_multiple(value, 5)) ? value : 0;
 }
 
-uint8_t main(uint8_t argc, uint8_t *argv[]) {
+int main(int argc, char *argv[]) {
   uint16_t max_value = atoi(argv[1]);
 
   uint64_t total = 0;
