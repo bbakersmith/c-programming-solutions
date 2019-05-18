@@ -1,25 +1,18 @@
-.PHONY: 1 2 3 4 5 6 8 11
+.PHONY: clean
 
-1:
-	gcc -o build/1 src/1.c
+BUILD_DIR=build
+SOURCE_DIR=src
 
-2:
-	gcc -o build/2 src/2.c
+SOURCES=$(wildcard $(SOURCE_DIR)/*.c)
+OUTPUTS=$(patsubst $(SOURCE_DIR)/%.c, $(BUILD_DIR)/%, $(SOURCES))
 
-3:
-	gcc -o build/3 src/3.c
+CC=gcc
+CFLAGS=-Wall -Wpedantic -Wdouble-promotion -Wshadow -Wlogical-op
 
-4:
-	gcc -o build/4 src/4.c
+all: $(OUTPUTS)
 
-5:
-	gcc -o build/5 src/5.c
+$(BUILD_DIR)/%: src/%.c
+	$(CC) $(CFLAGS) -o $@ $<
 
-6:
-	gcc -o build/6 src/6.c
-
-8:
-	gcc -o build/8 src/8.c
-
-11:
-	gcc -o build/11 src/11.c
+clean:
+	rm $(BUILD_DIR)/* 2>&1 || true
