@@ -14,36 +14,46 @@
 
 #include <stdio.h>
 
+#include "primes.c"
+
 bool is_factor(uint64_t candidate, uint64_t target) {
   return (target % candidate) == 0;
 }
 
-bool is_prime(uint64_t candidate) {
-  if(!(candidate & 1) || (candidate % 3) == 0)
-    return false;
-
-  for(uint64_t i = 5; (i * i) <= candidate; i += 6) {
-    if(is_factor(i, candidate) || (candidate % (i + 2)) == 0)
-      return false;
-  }
-
-  return true;
-}
-
 int main(int argc, char *argv[]) {
-  uint64_t number = atoi(argv[1]);
+  uint64_t number = atol(argv[1]);
+  uint64_t half_number = number / 2;
+  uint64_t sqrt_half_number = sqrtl(half_number);
 
-  uint64_t halfway = number / 2;
+  Sieve sqrt_half_sieve = sieve_of_eratosthenes(sqrt_half_number);
+  printf("Primes calculated: %lu\n", sqrt_half_sieve.primes_len);
 
-  for(uint64_t i = halfway; 2 < i; i--) {
-    if(is_factor(i, number)) {
-      if(is_prime(i)) {
-        printf("Largest Prime Factor: %lu\n", i);
-        return 0;
+  for(uint64_t i = 2; i < half_number; i++) {
+    if((i & 1) && (number % i) == 0) {
+      fprintf(stderr, ".");
+      uint64_t factor = number / i;
+      bool is_largest_prime_factor = true;
+      uint64_t pi = 0;
+      while(is_largest_prime_factor && pi < sqrt_half_sieve.primes_len) {
+        uint64_t known_prime = sqrt_half_sieve.primes[pi];
+        if(factor == known_prime) {
+          printf("\nLargest prime factor: %lu\n", factor);
+          exit(0);
+        } else if((factor % known_prime) == 0) {
+          is_largest_prime_factor = false;
+          // fprintf(stderr, "(%lu, %lu)", factor, sqrt_half_sieve.primes[pi]);
+        } else {
+          pi++;
+        }
+      }
+      if(is_largest_prime_factor) {
+        printf("\nLargest prime factor: %lu\n", factor);
+        exit(0);
+        break;
       }
     }
   }
 
-  printf("No Prime Factors!\n");
+  printf("\nNot found...\n");
   return 1;
 }
