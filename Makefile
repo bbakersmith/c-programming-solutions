@@ -7,7 +7,7 @@ SOURCE_DIR=src
 SOURCES=$(wildcard $(SOURCE_DIR)/*.c)
 OUTPUTS=$(patsubst $(SOURCE_DIR)/%.c, $(BUILD_DIR)/%, $(SOURCES))
 
-CC=gcc
+CC ?= gcc
 CFLAGS=-std=c11 -O3 -lm -I$(LIB_DIR) -Wall -Wpedantic -Wdouble-promotion -Wshadow -Wlogical-op
 
 all: $(OUTPUTS)
