@@ -20,16 +20,68 @@
 
 #include "primes.c"
 
-// FIXME
-typedef struct Variations {
+typedef struct Rotations {
+  uint32_t numbers[6];
+  uint8_t numbers_len;
+} Rotations;
+
+void rotate_digits(uint8_t digits[6], uint8_t digits_len) {
+  uint8_t first_digit = digits[0];
+  for(uint8_t i = 0; i < digits_len - 1; i++) {
+    digits[i] = digits[i + 1];
+  }
+  digits[digits_len - 1] = first_digit;
+}
+
+uint32_t digits_to_number(uint8_t digits[6], uint8_t digits_len) {
+  uint32_t number = 0;
+  for(uint8_t i = 0; i < digits_len; i++) {
+    number += digits[i] * pow(10, i);
+  }
+  /* printf("Digits to number: %i\n", number); */
+  return number;
+}
+
+Rotations rotations_new(uint32_t number) {
+  /* printf("Rotating %i\n", number); */
   uint8_t digits[6];
-  uint32_t initial;
-  uint32_t items[6];
-} Variations;
+  uint8_t digits_len = 0;
+
+  uint32_t tmp_number = number;
+  while(0 < tmp_number) {
+    digits[digits_len] = tmp_number % 10;
+    digits_len++;
+    tmp_number /= 10;
+  }
+
+  Rotations rotations = {
+    .numbers_len = digits_len
+  };
+
+  for(uint8_t i = 0; i < digits_len; i++) {
+    rotate_digits(digits, digits_len);
+    rotations.numbers[i] = digits_to_number(digits, digits_len);
+  }
+
+  return rotations;
+}
+
+bool is_prime(Sieve *sieve, uint32_t candidate) {
+  for(uint32_t i = 0; i < sieve->primes_len; i++) {
+    if(candidate == sieve->primes[i])
+      return true;
+  }
+  return false;
+}
 
 bool is_circular_prime(Sieve *sieve, uint32_t candidate) {
-  // for each rotation
-  // - is it prime?
+  Rotations rotations = rotations_new(candidate);
+
+  for(uint8_t i = 0; i < rotations.numbers_len; i++) {
+    if(!is_prime(sieve, rotations.numbers[i]))
+      return false;
+  }
+
   return true;
 }
 
@@ -42,6 +94,9 @@ int main(int argc, char *argv[]) {
   for(uint32_t i = 0; i < sieve.primes_len; i++) {
     circular_primes_count += is_circular_prime(&sieve, sieve.primes[i]);
   }
+
+  // special case handling 2 because the sieve implementation doesn't include it
+  circular_primes_count++;
 
   printf("Circular primes count: %i\n", circular_primes_count);
   return 0;
