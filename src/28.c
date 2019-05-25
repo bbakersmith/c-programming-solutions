@@ -1,5 +1,5 @@
 /**
- * @file 25.c
+ * @file 28.c
  *
  * @brief Number spiral diagonals
  *
