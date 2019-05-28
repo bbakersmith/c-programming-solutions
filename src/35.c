@@ -66,14 +66,6 @@ Rotations rotations_new(uint32_t number) {
   return rotations;
 }
 
-bool is_prime(Sieve *sieve, uint32_t candidate) {
-  for(uint32_t i = 0; i < sieve->primes_len; i++) {
-    if(candidate == sieve->primes[i])
-      return true;
-  }
-  return false;
-}
-
 bool is_circular_prime(Sieve *sieve, uint32_t candidate) {
   Rotations rotations = rotations_new(candidate);
 

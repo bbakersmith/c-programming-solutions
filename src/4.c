@@ -58,7 +58,7 @@ int products_compare(const void *a, const void *b) {
 
 int main() {
   uint32_t products[1000000];
-  uint32_t products_count;
+  uint32_t products_count = 0;
 
   for(uint32_t i = 100; i < 1000; i++) {
     for(uint32_t x = 100; x < 1000; x++) {

@@ -18,6 +18,8 @@ int main() {
     if(c == '\n') printf("\n");
   }
 
+  // TODO do the addition directly in binary
+
   printf("\n");
   return 0;
 }

@@ -31,9 +31,9 @@ int main(int argc, char *argv[]) {
   uint16_t i = 0;
   while(true) {
     char d = digits[i];
-    if(d == NULL) break;
-    printf("D: %c\n", digits[i]);
-    sum += (digits[i] - '0');
+    if(d == '\0') break;
+    printf("D: %c\n", d);
+    sum += (d - '0');
     i++;
   }
 
