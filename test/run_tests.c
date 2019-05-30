@@ -2,6 +2,7 @@
 
 static void run_all_tests(void) {
   RUN_TEST_GROUP(pe_21);
+  RUN_TEST_GROUP(pe_39);
 }
 
 int main(int argc, const char * argv[]) {

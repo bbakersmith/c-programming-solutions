@@ -16,9 +16,10 @@ TEST_SOURCE_FILES=\
   $(UNITY_DIR)/src/unity.c \
   $(UNITY_DIR)/extras/fixture/src/unity_fixture.c \
 	test/test_21.c \
+	test/test_39.c \
 	test/run_tests.c
 
-TEST_FLAGS=-I$(UNITY_DIR)/src -I$(UNITY_DIR)/extras/fixture/src -D_IS_TEST
+TEST_FLAGS=-Itest -I$(UNITY_DIR)/src -I$(UNITY_DIR)/extras/fixture/src -D_IS_TEST
 
 TEST_TARGET=$(BUILD_DIR)/run_tests.o
 
