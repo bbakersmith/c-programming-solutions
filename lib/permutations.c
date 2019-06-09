@@ -57,3 +57,18 @@ void permutations_next(Permutations *p) {
     permutations_next(p);
   }
 }
+
+uint32_t permutations_digits_to_int(char digits[16], uint8_t len) {
+  uint32_t value = 0;
+  uint8_t i = len - 1;
+  uint32_t multiplier = 1;
+  while(true) {
+    value += (digits[i] * multiplier);
+    if(i == 0) {
+      return value;
+    } else {
+      multiplier *= 10;
+      i--;
+    }
+  }
+}

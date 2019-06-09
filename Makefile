@@ -17,10 +17,10 @@ TEST_SOURCE_FILES=\
   $(UNITY_DIR)/src/unity.c \
   $(UNITY_DIR)/extras/fixture/src/unity_fixture.c \
 	lib/permutations.c \
+	test/test_13.c \
 	test/test_21.c \
 	test/test_39.c \
 	test/test_40.c \
-	test/test_41.c \
 	test/test_43.c \
 	test/test_permutations.c \
 	test/run_tests.c

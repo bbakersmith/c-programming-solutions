@@ -21,5 +21,6 @@ typedef struct Permutations {
 
 Permutations permutations_new(char start[16], uint8_t len);
 void permutations_next(Permutations *p);
+uint32_t permutations_digits_to_int(char digits[16], uint8_t len);
 
 #endif

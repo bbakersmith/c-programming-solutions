@@ -27,25 +27,10 @@
 
 #include "permutations.h"
 
-uint32_t pe_43_num_from_digits(char digits[16], uint8_t len) {
-  uint32_t value = 0;
-  uint8_t i = len - 1;
-  uint32_t multiplier = 1;
-  while(true) {
-    value += (digits[i] * multiplier);
-    if(i == 0) {
-      return value;
-    } else {
-      multiplier *= 10;
-      i--;
-    }
-  }
-}
-
 bool pe_43_is_special(Permutations *p) {
   uint8_t divisor[7] = {2, 3, 5, 7, 11, 13, 17};
   for(uint8_t i = 0; i < 7; i++) {
-    uint16_t val = pe_43_num_from_digits(&p->current[(i + 1)], 3);
+    uint32_t val = permutations_digits_to_int(&p->current[(i + 1)], 3);
     if((val % divisor[i]) != 0) {
       return false;
     }

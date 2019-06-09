@@ -49,6 +49,18 @@ TEST(permutations, test_permutations_heaps_algorithm) {
   }
 }
 
+TEST(permutations, test_permutations_digits_to_int) {
+  char d1[3] = {1, 2, 3};
+  TEST_ASSERT_EQUAL(123, permutations_digits_to_int(d1, 3));
+
+  char d2[5] = {5, 4, 1, 2, 3};
+  TEST_ASSERT_EQUAL(54123, permutations_digits_to_int(d2, 5));
+
+  char d3[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+  TEST_ASSERT_EQUAL(123456789, permutations_digits_to_int(d3, 10));
+}
+
 TEST_GROUP_RUNNER(permutations) {
   RUN_TEST_CASE(permutations, test_permutations_heaps_algorithm);
+  RUN_TEST_CASE(permutations, test_permutations_digits_to_int);
 }
