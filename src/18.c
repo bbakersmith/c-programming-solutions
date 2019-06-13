@@ -19,12 +19,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define TRI_ROWS 15
+#define TRI_ROWS 100
 
 char *strtok_r(char *str, const char *delim, char **saveptr);
 
-void file_read_row(FILE *file, char row[TRI_ROWS]) {
-  char row_raw[255];
+void file_read_row(FILE *file, uint64_t row[TRI_ROWS]) {
+  char row_raw[310];
   fgets(row_raw, sizeof(row_raw), file);
 
   char *token;
@@ -39,21 +39,6 @@ void file_read_row(FILE *file, char row[TRI_ROWS]) {
   }
 }
 
-uint64_t subtree_sum(char pyramid[TRI_ROWS][TRI_ROWS], uint8_t row, uint8_t column) {
-  uint64_t sum = 0;
-
-  uint8_t depth = 0;
-  while((row + depth) < TRI_ROWS) {
-    for(uint8_t i = 0; i <= depth; i++) {
-      /* printf("i: %i\n", i); */
-      sum += pyramid[row + depth][column + i];
-    }
-    depth++;
-  }
-
-  return sum;
-}
-
 int main(int argc, char *argv[]) {
   char *filename = argv[1];
 
@@ -64,33 +49,34 @@ int main(int argc, char *argv[]) {
     exit(1);
   }
 
-  char pyramid[TRI_ROWS][TRI_ROWS];
+  uint64_t pyramid[TRI_ROWS][TRI_ROWS];
   for(uint8_t i = 0; i < TRI_ROWS; i++) {
     file_read_row(file, pyramid[i]);
   }
 
-  /* printf("Row... "); */
-  /* for(uint8_t i = 0; i < 3; i++) { */
-  /*   printf("%i ", pyramid[2][i]); */
-  /* } */
-  /* printf("\n"); */
-
   // TODO
+  // - starting from 2nd to last row
+  // - get largest of lower 2 values (n)(n + 1)
+  // - add it to n
 
-  uint8_t row = 0;
-  uint8_t column = 0;
-  uint64_t sum = 0;
+  uint8_t row = TRI_ROWS - 2;
   while(true) {
-    printf("(%i, %i)\n", row, column);
-    sum += pyramid[row][column];
-    row++;
-    if(TRI_ROWS <= row) break;
-    uint64_t left_subtree_sum = subtree_sum(pyramid, row, column);
-    uint64_t right_subtree_sum = subtree_sum(pyramid, row, column + 1);
-    printf("%lu < %lu ?\n", left_subtree_sum, right_subtree_sum);
-    if(left_subtree_sum < right_subtree_sum) column++;
+    for(uint8_t col = 0; col <= row; col++) {
+      uint64_t a = pyramid[row + 1][col];
+      uint64_t b = pyramid[row + 1][col + 1];
+      if(b < a) {
+        pyramid[row][col] += a;
+      } else {
+        pyramid[row][col] += b;
+      }
+    }
+    if(row == 0) {
+      break;
+    } else {
+      row--;
+    }
   }
 
-  printf("Sum: %lu\n", sum);
+  printf("Sum: %lu\n", pyramid[0][0]);
   return 0;
 }
